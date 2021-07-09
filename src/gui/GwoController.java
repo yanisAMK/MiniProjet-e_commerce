@@ -1,7 +1,6 @@
 package gui;
 
-import app.Offre;
-import app.OffreLite;
+import app.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,18 +15,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-
-
 public class GwoController implements Initializable {
     //Contient la premiere ligne du fichier la premiere dans l'indexe 0 la deuxieme dans 1
     public String[] fileDimension;
-
+    public String fileinpath;
+    public String fileoutpath;
     public ArrayList<Offre> offres ;
     public ObservableList<OffreLite> tab ;
     public File input;
-    public double timer;
+    public long timer;
+    public FileWriter myWriter;
+    public String datafile;
 
-
+    @FXML   private TextField MutationrateTf;
     @FXML   private TextArea SolutionsTa;
     @FXML   private Label filenamelable;
     @FXML   private TableView<OffreLite> Litetable;
@@ -36,7 +36,7 @@ public class GwoController implements Initializable {
     @FXML   private TextField PopulationSizeTf;
     @FXML   private TextField MaxIterationsTf;
     @FXML   private Button SolveBtn;
-
+    @FXML   private Label Savinglabel;
 
     //generes un arraylist d'offres
     //remplis la table pour l'interface
@@ -87,31 +87,48 @@ public class GwoController implements Initializable {
         this.SolutionsTa.setEditable(false);
     }
 
-    public void Solve(){
+    public void Solve() throws IOException {
+        this.Savinglabel.setText("");
         this.SolutionsTa.clear();
         String SolutionString;
-        //maxIterations:
-        int maxIter = Integer.parseInt(MaxIterationsTf.getCharacters().toString());
-
-        //populationSize:
-        int PopSize = Integer.parseInt(PopulationSizeTf.getCharacters().toString());
-
-        //vecteur d'objets Offre:
-                            //offres
-
-        //Fichier en entrée:
-                            //input
-
+        int maxiter = Integer.parseInt(MaxIterationsTf.getCharacters().toString());
+        int popsize = Integer.parseInt(PopulationSizeTf.getCharacters().toString());
+        int mutationrate = Integer.parseInt(MutationrateTf.getCharacters().toString());
+        fileinpath = input.getAbsolutePath();
+        fileoutpath = input.getAbsolutePath() + "_output.txt";
+        /////////////////////////////////////////////////////////////////////////////////
+        WDPInstance instance = new WDPInstance(fileinpath);
+        System.out.println("start");
         timer = System.currentTimeMillis();
-        //fonction a executer
-
+        Solution sol = Genetic.startSearch(instance, popsize, maxiter, mutationrate);
         timer = System.currentTimeMillis() - timer;
+        SolutionString = "Meilleure prix d'enchére : " + sol.getBid();
 
-        SolutionString = "Temps d'execution : "+ timer
-                        +"\nNombre maximum d'iterations: " +maxIter
-                        +"\nPopulation size: "+ PopSize;
+        for (Offer o: sol.getOffers(instance)) {
+            SolutionString = SolutionString +"\n" + o.toString();
+        }
+        /////////////////////////////////////////////////////////////////////////////////
 
-        SolutionString =SolutionString + "\ntexte/solution a afficher";
+        SolutionString = SolutionString + "\nTemps d'execution : "+ timer/1000+"sec"
+                        +"\nNombre maximum d'iterations: " +maxiter
+                        +"\nPopulation size: "+ popsize + "Taux de mutation : "+ mutationrate;
+
+        SolutionString =SolutionString + "\n";
         this.SolutionsTa.appendText(SolutionString);
+        datafile = SolutionString;
+    }
+
+    public void savedata(){
+        String path = input.getAbsolutePath() + "_solution.txt";
+        try {
+            FileWriter myWriter = new FileWriter(path);
+            myWriter.write(datafile);
+            myWriter.close();
+            Savinglabel.setText("File saved in: "+path);
+            System.out.println("Data saved in" + path +".");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 }

@@ -1,3 +1,6 @@
+import app.Genetic;
+import app.Offer;
+import app.Solution;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,7 +10,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class Main extends Application {
-    //private static Stage stage;
+
     @Override
     public void start(Stage stage) {
         try {
@@ -21,7 +24,5 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args) {
-        launch(args);
-    }
+    public static void main(String[] args) { launch(args); }
 }

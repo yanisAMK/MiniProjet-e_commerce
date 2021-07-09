@@ -18,12 +18,16 @@
         </columns>
       </TableView>
       <TextArea fx:id="SolutionsTa" layoutX="14.0" layoutY="353.0" prefHeight="250.0" prefWidth="429.0" />
-      <Button fx:id="SolveBtn" layoutX="309.0" layoutY="295.0" mnemonicParsing="false" onAction="#Solve" prefHeight="30.0" prefWidth="134.0" text="Solve" />
+      <Button fx:id="SolveBtn" layoutX="309.0" layoutY="221.0" mnemonicParsing="false" onAction="#Solve" prefHeight="30.0" prefWidth="134.0" text="Solve" />
       <Label fx:id="filenamelable" layoutX="54.0" layoutY="95.0" prefHeight="18.0" prefWidth="134.0" text="File" />
-      <TextField fx:id="MaxIterationsTf" layoutX="54.0" layoutY="247.0" prefHeight="26.0" prefWidth="134.0" />
-      <Label layoutX="54.0" layoutY="229.0" prefHeight="18.0" prefWidth="134.0" text="Max iterations" />
+      <TextField fx:id="MaxIterationsTf" layoutX="54.0" layoutY="210.0" prefHeight="26.0" prefWidth="134.0" />
+      <Label layoutX="54.0" layoutY="192.0" prefHeight="18.0" prefWidth="134.0" text="Max iterations" />
       <Label layoutX="14.0" layoutY="335.0" prefHeight="18.0" prefWidth="134.0" text="Solutions" />
-      <Label layoutX="54.0" layoutY="163.0" prefHeight="18.0" prefWidth="134.0" text="Population size" />
-      <TextField fx:id="PopulationSizeTf" layoutX="54.0" layoutY="181.0" prefHeight="26.0" prefWidth="134.0" />
+      <Label layoutX="54.0" layoutY="130.0" prefHeight="18.0" prefWidth="134.0" text="Population size" />
+      <TextField fx:id="PopulationSizeTf" layoutX="54.0" layoutY="148.0" prefHeight="26.0" prefWidth="134.0" />
+      <Label layoutX="54.0" layoutY="255.0" prefHeight="18.0" prefWidth="134.0" text="Mutation rate" />
+      <TextField fx:id="MutationrateTf" layoutX="54.0" layoutY="273.0" prefHeight="26.0" prefWidth="134.0" />
+      <Button fx:id="SolveBtn1" layoutX="309.0" layoutY="284.0" mnemonicParsing="false" onAction="#savedata" prefHeight="30.0" prefWidth="134.0" text="Save Solution" />
+      <Label fx:id="Savinglabel" layoutX="11.0" layoutY="314.0" prefHeight="18.0" prefWidth="458.0" />
    </children>
 </AnchorPane>
