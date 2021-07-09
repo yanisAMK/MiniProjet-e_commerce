@@ -7,9 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
 import java.io.*;
@@ -21,15 +19,23 @@ import java.util.ResourceBundle;
 
 
 public class GwoController implements Initializable {
+    //Contient la premiere ligne du fichier la premiere dans l'indexe 0 la deuxieme dans 1
     public String[] fileDimension;
+
     public ArrayList<Offre> offres ;
     public ObservableList<OffreLite> tab ;
+    public File input;
+    public double timer;
 
+
+    @FXML   private TextArea SolutionsTa;
     @FXML   private Label filenamelable;
     @FXML   private TableView<OffreLite> Litetable;
     @FXML   private TableColumn<OffreLite,String> Cprice ;
     @FXML   private TableColumn<OffreLite,String> CnbObjects ;
-
+    @FXML   private TextField PopulationSizeTf;
+    @FXML   private TextField MaxIterationsTf;
+    @FXML   private Button SolveBtn;
 
 
     //generes un arraylist d'offres
@@ -59,11 +65,12 @@ public class GwoController implements Initializable {
         line = null;
     }
 
-    @FXML
+    @FXML//importer un fichier
     private void importfile() throws IOException {
 
         FileChooser chooser = new FileChooser();
         File f = chooser.showOpenDialog(null);
+        input = f;
         if(f != null){
             filenamelable.setText("file: "+f.getName());
             readfile(f);
@@ -72,10 +79,39 @@ public class GwoController implements Initializable {
         }
     }
 
+    //initialisation de l'interface
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Cprice.setCellValueFactory(data -> data.getValue().getPrice());
         CnbObjects.setCellValueFactory(data -> data.getValue().getSize());
+        this.SolutionsTa.setEditable(false);
+    }
 
+    public void Solve(){
+        this.SolutionsTa.clear();
+        String SolutionString;
+        //maxIterations:
+        int maxIter = Integer.parseInt(MaxIterationsTf.getCharacters().toString());
+
+        //populationSize:
+        int PopSize = Integer.parseInt(PopulationSizeTf.getCharacters().toString());
+
+        //vecteur d'objets Offre:
+                            //offres
+
+        //Fichier en entrée:
+                            //input
+
+        timer = System.currentTimeMillis();
+        //fonction a executer
+
+        timer = System.currentTimeMillis() - timer;
+
+        SolutionString = "Temps d'execution : "+ timer
+                        +"\nNombre maximum d'iterations: " +maxIter
+                        +"\nPopulation size: "+ PopSize;
+
+        SolutionString =SolutionString + "\ntexte/solution a afficher";
+        this.SolutionsTa.appendText(SolutionString);
     }
 }
